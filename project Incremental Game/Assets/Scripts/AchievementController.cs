@@ -17,7 +17,7 @@ public class AchievementController : MonoBehaviour
             return _instance;
         }
     }
-
+    public AudioSource sfx_reward;
  
     [SerializeField] private Transform _popUpTransform;
     [SerializeField] private Text _popUpText;
@@ -60,6 +60,7 @@ public class AchievementController : MonoBehaviour
 
     private void ShowAchivementPopUp (AchievementData achievement)
     {
+        sfx_reward.Play();
         _popUpText.text = achievement.Title;
         _popUpShowDurationCounter = _popUpShowDuration;
         _popUpTransform.localScale = Vector2.right;

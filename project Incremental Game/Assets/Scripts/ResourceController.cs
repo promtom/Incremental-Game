@@ -10,6 +10,7 @@ public class ResourceController : MonoBehaviour
     public Text ResourceUnlockCost;
     public Button ResourceButton;
     public Image ResourceImage;
+    public AudioSource sfx_up;
 
     private ResourceConfig _config;
     
@@ -70,6 +71,7 @@ public class ResourceController : MonoBehaviour
         _level++;
         ResourceUpgradeCost.text = $"Upgrade Cost\n{ GetUpgradeCost () }";
         ResourceDescription.text = $"{ _config.Name } Lv. { _level }\n+{ GetOutput ().ToString ("0") }";
+        sfx_up.Play();
     }
     public void UnlockResource()
     {
