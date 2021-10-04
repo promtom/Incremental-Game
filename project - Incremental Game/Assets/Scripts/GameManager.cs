@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour
 
     private float _collectSecond;
 
+    public float SaveDelay = 5f;
+    private float _saveDelayCounter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,8 +59,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //uploading
+        float deltaTime = Time.unscaledDeltaTime;
+        _saveDelayCounter -= deltaTime;
         // Fungsi untuk selalu mengeksekusi CollectPerSecond setiap detik 
-        _collectSecond += Time.unscaledDeltaTime; 
+        _collectSecond += deltaTime;
+
         if (_collectSecond >= 1f) 
         { 
             CollectPerSecond (); 
@@ -134,7 +141,9 @@ public class GameManager : MonoBehaviour
         UserDataManager.Progress.Gold += value; 
         GoldInfo.text = $"Gold: { UserDataManager.Progress.Gold.ToString ("0") }";
         
-        UserDataManager.Save ();
+        UserDataManager.Save(_saveDelayCounter < 0f);
+        if (_saveDelayCounter < 0f)
+            _saveDelayCounter = SaveDelay;
     }
 
     public void CollectByTap (Vector3 tapPosition, Transform parent)
